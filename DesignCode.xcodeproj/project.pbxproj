@@ -15,6 +15,9 @@
 		2106048C2515947700883C3E /* DesignCodeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2106048B2515947700883C3E /* DesignCodeUITests.swift */; };
 		21098E542516E492007B3B7D /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21098E532516E492007B3B7D /* MenuView.swift */; };
 		21098E592516F308007B3B7D /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21098E582516F308007B3B7D /* Home.swift */; };
+		213412C125197CCB00C720E6 /* UpdateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 213412C025197CCB00C720E6 /* UpdateStore.swift */; };
+		213412C62519818A00C720E6 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 213412C52519818A00C720E6 /* TabBar.swift */; };
+		213412CE2519861800C720E6 /* RingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 213412CD2519861800C720E6 /* RingView.swift */; };
 		2177B27A2518265600266EF1 /* UpdateList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2177B2792518265600266EF1 /* UpdateList.swift */; };
 		2177B27F25182D3000266EF1 /* UpdateDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2177B27E25182D3000266EF1 /* UpdateDetail.swift */; };
 		21FC39012517995C007007F4 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FC39002517995C007007F4 /* HomeView.swift */; };
@@ -52,6 +55,9 @@
 		2106048D2515947700883C3E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		21098E532516E492007B3B7D /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		21098E582516F308007B3B7D /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		213412C025197CCB00C720E6 /* UpdateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateStore.swift; sourceTree = "<group>"; };
+		213412C52519818A00C720E6 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
+		213412CD2519861800C720E6 /* RingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingView.swift; sourceTree = "<group>"; };
 		2177B2792518265600266EF1 /* UpdateList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateList.swift; sourceTree = "<group>"; };
 		2177B27E25182D3000266EF1 /* UpdateDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateDetail.swift; sourceTree = "<group>"; };
 		21FC39002517995C007007F4 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -107,9 +113,12 @@
 			children = (
 				2106046E2515947600883C3E /* DesignCodeApp.swift */,
 				210604702515947600883C3E /* ContentView.swift */,
+				213412CD2519861800C720E6 /* RingView.swift */,
 				21098E532516E492007B3B7D /* MenuView.swift */,
 				2177B2792518265600266EF1 /* UpdateList.swift */,
 				2177B27E25182D3000266EF1 /* UpdateDetail.swift */,
+				213412C025197CCB00C720E6 /* UpdateStore.swift */,
+				213412C52519818A00C720E6 /* TabBar.swift */,
 				21098E582516F308007B3B7D /* Home.swift */,
 				21FC39002517995C007007F4 /* HomeView.swift */,
 				210604722515947700883C3E /* Assets.xcassets */,
@@ -274,10 +283,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				213412CE2519861800C720E6 /* RingView.swift in Sources */,
+				213412C62519818A00C720E6 /* TabBar.swift in Sources */,
 				2177B27F25182D3000266EF1 /* UpdateDetail.swift in Sources */,
 				210604712515947600883C3E /* ContentView.swift in Sources */,
 				21098E542516E492007B3B7D /* MenuView.swift in Sources */,
 				2177B27A2518265600266EF1 /* UpdateList.swift in Sources */,
+				213412C125197CCB00C720E6 /* UpdateStore.swift in Sources */,
 				21098E592516F308007B3B7D /* Home.swift in Sources */,
 				21FC39012517995C007007F4 /* HomeView.swift in Sources */,
 				2106046F2515947600883C3E /* DesignCodeApp.swift in Sources */,
@@ -439,6 +451,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"DesignCode/Preview Content\"";
+				DEVELOPMENT_TEAM = 8ZU37RYTLU;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = DesignCode/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -460,6 +473,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"DesignCode/Preview Content\"";
+				DEVELOPMENT_TEAM = 8ZU37RYTLU;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = DesignCode/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
