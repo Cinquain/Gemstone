@@ -43,6 +43,7 @@
 		21A0EF51251ABCB00048727A /* WorkSans-Italic-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 21A0EF3B251ABCB00048727A /* WorkSans-Italic-VariableFont_wght.ttf */; };
 		21A0EF52251ABCB00048727A /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = 21A0EF3C251ABCB00048727A /* OFL.txt */; };
 		21A0EF53251ABCB00048727A /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 21A0EF3D251ABCB00048727A /* README.txt */; };
+		21A0EF58251AC59A0048727A /* CourseList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A0EF57251AC59A0048727A /* CourseList.swift */; };
 		21FC39012517995C007007F4 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FC39002517995C007007F4 /* HomeView.swift */; };
 /* End PBXBuildFile section */
 
@@ -106,6 +107,7 @@
 		21A0EF3B251ABCB00048727A /* WorkSans-Italic-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "WorkSans-Italic-VariableFont_wght.ttf"; sourceTree = "<group>"; };
 		21A0EF3C251ABCB00048727A /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
 		21A0EF3D251ABCB00048727A /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		21A0EF57251AC59A0048727A /* CourseList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseList.swift; sourceTree = "<group>"; };
 		21FC39002517995C007007F4 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -168,6 +170,7 @@
 				213412C52519818A00C720E6 /* TabBar.swift */,
 				21098E582516F308007B3B7D /* Home.swift */,
 				21FC39002517995C007007F4 /* HomeView.swift */,
+				21A0EF57251AC59A0048727A /* CourseList.swift */,
 				210604722515947700883C3E /* Assets.xcassets */,
 				21A0EF26251ABCB00048727A /* Work_Sans */,
 				210604772515947700883C3E /* Info.plist */,
@@ -394,6 +397,7 @@
 				21A0EF22251ABA440048727A /* Modifiers.swift in Sources */,
 				213412C62519818A00C720E6 /* TabBar.swift in Sources */,
 				2177B27F25182D3000266EF1 /* UpdateDetail.swift in Sources */,
+				21A0EF58251AC59A0048727A /* CourseList.swift in Sources */,
 				210604712515947600883C3E /* ContentView.swift in Sources */,
 				21098E542516E492007B3B7D /* MenuView.swift in Sources */,
 				2177B27A2518265600266EF1 /* UpdateList.swift in Sources */,
