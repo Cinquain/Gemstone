@@ -9,22 +9,51 @@ import SwiftUI
 
 struct CourseList: View {
     
-    @State var show = false
-    @State var show2 = false
+  
+    @State var courses = courseData
+    @State var active = false
+    @State var activeIndex = -1
+    @State var activeView = CGSize.zero
     
     var body: some View {
         
-        ScrollView {
-            VStack(spacing: 30) {
-                CourseView(show: $show)
-                GeometryReader { geo in
-                    CourseView(show: $show2)
-                        .offset(y: self.show2 ? -geo.frame(in: .global).minY : 0)
+        ZStack {
+            
+            Color.black.opacity(Double(activeView.height / 500))
+                .animation(.linear)
+                .edgesIgnoringSafeArea(.all)
+            
+            ScrollView {
+                VStack(spacing: 30) {
+                    
+                    Text("Secret Spots")
+                        .font(.largeTitle).bold()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .blur(radius: active ? 20 : 0)
+                    
+                    ForEach(courses.indices, id: \.self) { index in
+                        GeometryReader { geo in
+                            CourseView(
+                                show: $courses[index].show,
+                                course: self.courses[index],
+                                active: $active, index: index,
+                                activeIndex: $activeIndex, activeView: $activeView
+                            )
+                                .offset(y: self.courses[index].show ? -geo.frame(in: .global).minY : 0)
+                            .opacity(self.activeIndex != index && self.active ? 0 : 1)
+                            .scaleEffect(self.activeIndex != index && self.active ? 0.5 : 1)
+                            .offset(x: self.activeIndex != index && self.active ? screen.width : 0)
+                        }
+                        .frame(height: 280)
+                        .frame(width: self.courses[index].show ? .infinity : screen.width - 60)
+                        .zIndex(self.courses[index].show ? 1 : 0)
+                    }
                 }
-                .frame(height: show2 ? screen.height : 280)
-                .frame(width: show2 ? .infinity : screen.width - 60)
+                .frame(width: screen.width)
+                .animation(.spring(response: 0.5, dampingFraction: 0.6, blendDuration: 0))
+                .statusBar(hidden: active ? true : false)
+                .animation(.linear)
             }
-            .frame(width: screen.width)
         }
     }
 }
@@ -38,6 +67,13 @@ struct CourseList_Previews: PreviewProvider {
 struct CourseView: View {
     
     @Binding var show: Bool
+    var course: Course
+    @Binding var active: Bool
+    var index: Int
+    @Binding var activeIndex: Int
+    @Binding var activeView: CGSize
+    
+    
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -65,15 +101,15 @@ struct CourseView: View {
                 HStack(alignment: .top){
                     
                     VStack(alignment: .leading, spacing: 8.0) {
-                        Text("SwiftUI Advanced")
+                        Text(course.title)
                             .font(.system(size: 24, weight: .bold))
                             .foregroundColor(.white)
-                        Text("20 Sections")
+                        Text(course.subtitle)
                             .foregroundColor(Color.white.opacity(0.7))
                     }
                     Spacer()
                     ZStack {
-                        Image(uiImage: #imageLiteral(resourceName: "Logo1"))
+                        Image(uiImage: course.logo)
                             .opacity(show ? 0 : 1)
                         
                         Image(systemName: "xmark")
@@ -87,7 +123,7 @@ struct CourseView: View {
                     
                 }
                 Spacer()
-                Image(uiImage: #imageLiteral(resourceName: "Card5"))
+                Image(uiImage: course.image)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(maxWidth: .infinity)
@@ -96,16 +132,88 @@ struct CourseView: View {
             .padding(show ? 30 : 20)
             .padding(.top, show ? 30 : 0)
             .frame(maxWidth: show ? .infinity : screen.width - 60, maxHeight: show ? 460 : 280)
-            .background(Color(#colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1)))
+            .background(Color(course.color))
             .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
-            .shadow(color: Color(#colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1)).opacity(0.3), radius: 20, x: 0, y: 20)
+            .shadow(color: Color(course.color).opacity(0.3), radius: 20, x: 0, y: 20)
+            .gesture(
+                show ?
+                DragGesture().onChanged { value in
+                    guard value.translation.height < 300 else {return}
+                    guard value.translation.height > 0 else {return}
+                    
+                        self.activeView = value.translation
+                    
+                }
+                .onEnded { value in
+                    if self.activeView.height > 50 {
+                        self.show = false
+                        self.active = false
+                        self.activeIndex = -1
+                    }
+                    self.activeView = .zero
+                }
+                : nil
+            )
             .onTapGesture {
                 self.show.toggle()
+                self.active.toggle()
+                
+                if self.show {
+                    self.activeIndex = self.index
+                } else {
+                    self.activeIndex = -1
+                }
             }
         }
+        .frame(height: show ? screen.height : 280)
+        .scaleEffect(1 - self.activeView.height / 1000)
+        .rotation3DEffect(
+            Angle(degrees: Double(self.activeView.height / 10)),
+            axis: (x: 0, y: 10, z: 0)
+        )
+        .hueRotation(Angle(degrees: Double(self.activeView.height)))
         .animation(.spring(response: 0.5, dampingFraction: 0.6, blendDuration: 0))
+        .gesture(
+            show ?
+            DragGesture().onChanged { value in
+                guard value.translation.height < 300 else {return}
+                guard value.translation.height > 0 else {return}
+                
+                    self.activeView = value.translation
+                
+            }
+            .onEnded { value in
+                if self.activeView.height > 50 {
+                    self.show = false
+                    self.active = false
+                    self.activeIndex = -1
+                }
+                self.activeView = .zero
+            }
+            : nil
+        )
         .edgesIgnoringSafeArea(.all)
 
 
     }
 }
+
+
+
+struct Course: Identifiable {
+    
+    var id = UUID()
+    var title: String
+    var subtitle: String
+    var image: UIImage
+    var logo: UIImage
+    var color: UIColor
+    var show: Bool
+}
+
+var courseData = [
+    Course(title: "The Magic Garden", subtitle: "Philly", image: #imageLiteral(resourceName: "Card4"), logo: #imageLiteral(resourceName: "Card5"), color: #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1), show: false),
+    Course(title: "The Ideal Palace", subtitle: "Philly", image: #imageLiteral(resourceName: "Card4"), logo: #imageLiteral(resourceName: "Card5"), color: #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1), show: false),
+    Course(title: "Graffi Pier", subtitle: "Philly", image: #imageLiteral(resourceName: "Card4"), logo: #imageLiteral(resourceName: "Card5"), color: #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1), show: false),Course(title: "The Magic Garden", subtitle: "Philly", image: #imageLiteral(resourceName: "Card4"), logo: #imageLiteral(resourceName: "Card5"), color: #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), show: false)
+]
+
