@@ -6,11 +6,11 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct CourseList: View {
     
-  
-    @State var courses = courseData
+    @ObservedObject var store = CourseStore()
     @State var active = false
     @State var activeIndex = -1
     @State var activeView = CGSize.zero
@@ -22,6 +22,8 @@ struct CourseList: View {
             Color.black.opacity(Double(activeView.height / 500))
                 .animation(.linear)
                 .edgesIgnoringSafeArea(.all)
+               
+            }
             
             ScrollView {
                 VStack(spacing: 30) {
@@ -31,22 +33,22 @@ struct CourseList: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .blur(radius: active ? 20 : 0)
                     
-                    ForEach(courses.indices, id: \.self) { index in
+                    ForEach(store.courses.indices, id: \.self) { index in
                         GeometryReader { geo in
                             CourseView(
-                                show: $courses[index].show,
-                                course: self.courses[index],
+                                show: $store.courses[index].show,
+                                course: self.store.courses[index],
                                 active: $active, index: index,
                                 activeIndex: $activeIndex, activeView: $activeView
                             )
-                                .offset(y: self.courses[index].show ? -geo.frame(in: .global).minY : 0)
+                            .offset(y: self.store.courses[index].show ? -geo.frame(in: .global).minY : 0)
                             .opacity(self.activeIndex != index && self.active ? 0 : 1)
                             .scaleEffect(self.activeIndex != index && self.active ? 0.5 : 1)
                             .offset(x: self.activeIndex != index && self.active ? screen.width : 0)
                         }
                         .frame(height: 280)
-                        .frame(width: self.courses[index].show ? .infinity : screen.width - 60)
-                        .zIndex(self.courses[index].show ? 1 : 0)
+                        .frame(width: self.store.courses[index].show ? .infinity : screen.width - 60)
+                        .zIndex(self.store.courses[index].show ? 1 : 0)
                     }
                 }
                 .frame(width: screen.width)
@@ -56,11 +58,13 @@ struct CourseList: View {
             }
         }
     }
-}
+
 
 struct CourseList_Previews: PreviewProvider {
     static var previews: some View {
-        CourseList()
+        Group {
+            CourseList()
+        }
     }
 }
 
@@ -91,7 +95,7 @@ struct CourseView: View {
             .padding(30)
             .frame(maxWidth: show ? .infinity : screen.width - 60, maxHeight: show ? .infinity : 280, alignment: .top)
             .offset(y: show ? 460 : 0)
-            .background(Color.white)
+            .background(Color("background2"))
             .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
             .shadow(color: Color.black.opacity(0.2), radius: 20, x: 0, y: 20)
             .opacity(show ? 1 : 0)
@@ -123,7 +127,7 @@ struct CourseView: View {
                     
                 }
                 Spacer()
-                Image(uiImage: course.image)
+                WebImage(url: course.image)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(maxWidth: .infinity)
@@ -163,6 +167,12 @@ struct CourseView: View {
                 } else {
                     self.activeIndex = -1
                 }
+            }
+            
+            if show {
+//                CourseDetail(course: course, show: $show, active: $active, activeIndex: $activeIndex)
+//                    .background(Color.white)
+//                    .animation(nil)
             }
         }
         .frame(height: show ? screen.height : 280)
@@ -205,15 +215,15 @@ struct Course: Identifiable {
     var id = UUID()
     var title: String
     var subtitle: String
-    var image: UIImage
+    var image: URL
     var logo: UIImage
     var color: UIColor
     var show: Bool
 }
 
 var courseData = [
-    Course(title: "The Magic Garden", subtitle: "Philly", image: #imageLiteral(resourceName: "Card4"), logo: #imageLiteral(resourceName: "Card5"), color: #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1), show: false),
-    Course(title: "The Ideal Palace", subtitle: "Philly", image: #imageLiteral(resourceName: "Card4"), logo: #imageLiteral(resourceName: "Card5"), color: #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1), show: false),
-    Course(title: "Graffi Pier", subtitle: "Philly", image: #imageLiteral(resourceName: "Card4"), logo: #imageLiteral(resourceName: "Card5"), color: #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1), show: false),Course(title: "The Magic Garden", subtitle: "Philly", image: #imageLiteral(resourceName: "Card4"), logo: #imageLiteral(resourceName: "Card5"), color: #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), show: false)
+    Course(title: "The Magic Garden", subtitle: "Philly", image: URL(string: "https://drive.google.com/file/d/1icMVh5jOxuO2OSVgiKMFCzZadE5tpZa_/view?usp=sharing")!, logo: #imageLiteral(resourceName: "Card5"), color: #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1), show: false),
+    Course(title: "The Ideal Palace", subtitle: "Philly", image: URL(string: "https://drive.google.com/file/d/0B2j-KZb_V-zNMEZ4LVdEdng4MFU/view?usp=sharing")!, logo: #imageLiteral(resourceName: "Card5"), color: #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1), show: false),
+    Course(title: "Graffi Pier", subtitle: "Philly", image: URL(string: "https://drive.google.com/file/d/1agoBmcBawesAra1M8OEIOlmXRuIVks5i/view?usp=sharing")!, logo: #imageLiteral(resourceName: "Card5"), color: #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1), show: false),Course(title: "The Magic Garden", subtitle: "Philly", image: URL(string: "https://drive.google.com/file/d/0B2j-KZb_V-zNWHdzZ0VtckVMVkk/view?usp=sharing")!, logo: #imageLiteral(resourceName: "Card5"), color: #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), show: false)
 ]
 

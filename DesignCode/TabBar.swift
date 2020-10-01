@@ -15,7 +15,7 @@ struct TabBar: View {
                 Text("Home")
             }
             
-            ContentView().tabItem {
+            CourseList().tabItem {
                 Image(systemName: "rectangle.stack.fill")
                 Text("Certificates")
             }
@@ -27,7 +27,6 @@ struct TabBar: View {
 struct TabBar_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            TabBar().previewDevice("iPhone 8")
             TabBar().previewDevice("iPhone 11")
 
         }
